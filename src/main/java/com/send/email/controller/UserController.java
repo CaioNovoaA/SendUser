@@ -3,7 +3,9 @@ package com.send.email.controller;
 import com.send.email.model.User;
 import com.send.email.repository.UserRepository;
 import com.send.email.response.UserResponseDTO;
+import com.send.email.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,10 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     UserRepository usuarioRepository;
+    @Autowired
+    UserService userservice;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<User> cadastraUsuario(@RequestBody @Valid UserRequest userRequest) {
         User user = userRequest.toModel();
         usuarioRepository.save(user);
@@ -30,6 +34,12 @@ public class UserController {
                 .map(user -> ResponseEntity.ok().body(user))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/{id}")
+    public void sendUserMessage(@RequestParam Long userId) {
+        userservice.sendMessage(userId);
+    }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {

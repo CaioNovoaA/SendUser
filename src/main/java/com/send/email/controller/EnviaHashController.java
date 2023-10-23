@@ -2,17 +2,18 @@ package com.send.email.controller;
 
 import com.send.email.model.EnviaHash;
 import com.send.email.repository.EnviaHashRepository;
+import com.send.email.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/send")
 public class EnviaHashController {
-
+    @Autowired
+    UserService userService;
     @Autowired
     private EnviaHashRepository enviaHashRepository;
 
@@ -21,11 +22,9 @@ public class EnviaHashController {
         this.enviaHashRepository = enviaHashRepository;
     }
 
-    @PostMapping("/enviaHash")
-    public ResponseEntity<EnviaHash> Enviahash(@RequestBody @Valid EnviaHash enviaHash) {
-        enviaHashRepository.save(enviaHash);
-
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public void sendUserMessage(@RequestParam Long userId) {
+        userService.sendMessage(userId);
     }
 
 }

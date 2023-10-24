@@ -1,6 +1,5 @@
-package com.send.email.rabbitmq;
+package com.receiver.demo;
 
-import com.send.email.model.User;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 

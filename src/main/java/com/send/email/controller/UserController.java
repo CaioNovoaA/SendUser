@@ -5,7 +5,6 @@ import com.send.email.repository.UserRepository;
 import com.send.email.response.UserResponseDTO;
 import com.send.email.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     //Adicionar o responde para o método getmapping por id
-    @GetMapping("/{id}")
+    @GetMapping("/take/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return usuarioRepository.findById(id)
                 .map(user -> ResponseEntity.ok().body(user))
@@ -45,7 +44,7 @@ public class UserController {
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<User> users = usuarioRepository.findAll();
         List<UserResponseDTO> userDTOs = users.stream()
-                .map(user -> new UserResponseDTO(user.getEmail(), user.getPassword()))
+                .map(user -> new UserResponseDTO(user.getLogin(), user.getPassword()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(userDTOs);
     }

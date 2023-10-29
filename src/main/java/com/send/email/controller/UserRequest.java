@@ -11,19 +11,22 @@ public class UserRequest {
 
    @NotBlank
     @Email(message = "Email must be a valid email address")
-    private String email;
+    private String login;
     @NotNull
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-    public UserRequest(String email, String password) {
-        this.email = email;
+    private String role;
+
+    public UserRequest(String login, String password, String role) {
+        this.login = login;
         this.password = password;
+        this.role = role;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String login) {
+        this.login = login;
     }
 
     public void setPassword(String password) {
@@ -31,7 +34,7 @@ public class UserRequest {
     }
 
     public User toModel() {
-        return new User(email, password);
+        return new User(login, password);
     }
 
 

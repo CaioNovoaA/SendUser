@@ -10,37 +10,48 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
+@Table(name = "user_tb")
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Table(name = "tb_user")
-@EqualsAndHashCode
-public class User implements Serializable, UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    private String email;
+    private Long id;
+    @Getter
+    private String login;
     private String password;
     private UserRole role;
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String login, String password, UserRole role) {
+        this.login = login;
         this.password = password;
+        this.role = role;
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(String login, String encryptedPassword, String role) {
+        this.login = login;
+        this.password = encryptedPassword;
+        this.role = UserRole.valueOf(role);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return login;
     }
 
     @Override
@@ -58,8 +69,15 @@ public class User implements Serializable, UserDetails {
         return true;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     @Override
     public boolean isEnabled() {
         return true;
+
+
+
     }
 }

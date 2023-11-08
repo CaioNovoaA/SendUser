@@ -1,9 +1,12 @@
 package com.receiver.receive;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
@@ -19,27 +22,14 @@ public class User implements Serializable {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
     }
 
-
-
-    public String getPassword() {
-        return password;
-    }
 
     // getters and setters...
 

@@ -21,6 +21,8 @@ class UserServiceTest {
     @Autowired
     private UserService userService;
 
+
+
     @MockBean
     private RabbitTemplate rabbitTemplate;
 
@@ -49,7 +51,7 @@ class UserServiceTest {
     @Test
     void testSendMessageWithNullUserId() {
         // Dados de teste
-        Long userId = 1L;
+        Long userId = null;
 
         // Execução do teste e verificação
         assertThrows(IllegalArgumentException.class, () -> userService.sendMessage(userId));

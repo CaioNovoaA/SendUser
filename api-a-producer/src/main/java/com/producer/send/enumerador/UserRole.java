@@ -1,8 +1,7 @@
 package com.producer.send.enumerador;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("admin"), USER("user");
 
     private String role;
 

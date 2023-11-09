@@ -1,12 +1,16 @@
 package com.producer.send.controller;
 
 import com.producer.send.model.User;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+@Getter
 public class UserRequest {
 
    @NotBlank

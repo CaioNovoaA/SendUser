@@ -11,6 +11,7 @@ import com.producer.send.response.LoginResponseDto;
 import com.producer.send.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,7 +47,6 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
-
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
         if (repository.findByLogin(data.login()).isPresent()) return ResponseEntity.badRequest().build();

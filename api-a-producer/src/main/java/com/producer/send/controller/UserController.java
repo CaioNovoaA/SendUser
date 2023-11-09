@@ -6,6 +6,7 @@ import com.producer.send.response.UserResponseDTO;
 import com.producer.send.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +23,8 @@ public class UserController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<User> cadastraUsuario(@RequestBody @Valid UserRequest userRequest) {
-        User user = userRequest.toModel();
+        String encryptedPassword = new BCryptPasswordEncoder().encode(userRequest.getPassword());
+        User user = new User(userRequest.getLogin(),encryptedPassword, userRequest.getRole());
         usuarioRepository.save(user);
         return ResponseEntity.ok().build();
     }

@@ -29,8 +29,8 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .mvcMatchers(HttpMethod.POST, "auth/login").permitAll()
                         .mvcMatchers(HttpMethod.POST, "auth/register").permitAll()
-                        .mvcMatchers(HttpMethod.GET, "/user/**").permitAll()).build();
-                     //   .anyRequest().authenticated()).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
+                        .mvcMatchers(HttpMethod.POST, "user/cadastrar").permitAll()
+                        .mvcMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN").anyRequest().authenticated()).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 
     }
 

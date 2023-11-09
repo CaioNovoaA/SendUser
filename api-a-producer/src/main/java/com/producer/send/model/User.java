@@ -17,9 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Getter
     private String login;
     private String password;
     private UserRole role;
@@ -68,17 +70,9 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override

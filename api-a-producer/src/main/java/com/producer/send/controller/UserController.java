@@ -3,6 +3,7 @@ package com.producer.send.controller;
 import com.producer.send.repository.UserRepository;
 import com.producer.send.model.User;
 import com.producer.send.response.UserResponseDTO;
+import com.producer.send.service.RabbitMQService;
 import com.producer.send.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
     @Autowired
     UserRepository usuarioRepository;
     @Autowired
-    UserService userservice;
+    RabbitMQService rabbitMQService;
 
     @PostMapping("/cadastrar")
     public ResponseEntity<User> cadastraUsuario(@RequestBody @Valid UserRequest userRequest) {
@@ -38,7 +39,7 @@ public class UserController {
 
     @PostMapping("/{id}")
     public void sendUserMessage(@RequestParam Long userId) {
-        userservice.sendMessage(userId);
+        rabbitMQService.sendMessage(userId);
     }
 
 

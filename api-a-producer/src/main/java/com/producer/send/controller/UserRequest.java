@@ -13,7 +13,8 @@ import javax.validation.constraints.Size;
 @Getter
 public class UserRequest {
 
-   @NotBlank
+    @NotNull
+    @NotBlank
     @Email(message = "Email must be a valid email address")
     private String login;
     @NotNull

@@ -13,15 +13,15 @@ import java.util.List;
 @Table(name = "user_tb")
 @Entity
 @Getter
-@Data
-@NoArgsConstructor
+@Setter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
     private String login;
     private String password;
     private UserRole role;

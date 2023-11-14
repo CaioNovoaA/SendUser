@@ -19,7 +19,7 @@ import java.util.Optional;
 class UserServiceTest {
 
     @Autowired
-    private UserService userService;
+    private RabbitMQService rabbitMQService;
 
 
 
@@ -40,7 +40,7 @@ class UserServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
         // Execução do teste
-        userService.sendMessage(userId);
+        rabbitMQService.sendMessage(userId);
 
         // Verificação
         verify(rabbitTemplate).convertAndSend(RabbitMQConfig.EXCHANGE_NAME, "user.created", user);
@@ -54,7 +54,7 @@ class UserServiceTest {
         Long userId = null;
 
         // Execução do teste e verificação
-        assertThrows(IllegalArgumentException.class, () -> userService.sendMessage(userId));
+        assertThrows(IllegalArgumentException.class, () -> rabbitMQService.sendMessage(userId));
     }
 }
 

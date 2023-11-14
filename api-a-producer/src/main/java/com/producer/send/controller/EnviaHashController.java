@@ -1,6 +1,7 @@
 package com.producer.send.controller;
 
 import com.producer.send.repository.EnviaHashRepository;
+import com.producer.send.service.RabbitMQService;
 import com.producer.send.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/send")
 public class EnviaHashController {
     @Autowired
-    UserService userService;
+    RabbitMQService rabbitMQService;
     @Autowired
     private EnviaHashRepository enviaHashRepository;
 
@@ -20,7 +21,7 @@ public class EnviaHashController {
 
     @PostMapping
     public void sendUserMessage(@RequestParam Long userId) {
-        userService.sendMessage(userId);
+        rabbitMQService.sendMessage(userId);
     }
 
 }

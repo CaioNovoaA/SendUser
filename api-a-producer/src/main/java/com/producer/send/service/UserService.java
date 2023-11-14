@@ -11,25 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    public UserService(RabbitTemplate rabbitTemplate, UserRepository userRepository) {
-        this.rabbitTemplate = rabbitTemplate;
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void sendMessage(Long userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("User ID cannot be null");
-        }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, "user.created", user);
-    }
 }

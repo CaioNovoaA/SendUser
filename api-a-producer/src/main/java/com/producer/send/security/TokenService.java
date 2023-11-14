@@ -19,6 +19,9 @@ public class TokenService {
     private String secret;
 
     public String generateToken(User user){
+        if(user == null || user.getLogin().isBlank() || user.getPassword().isBlank()){
+            throw new IllegalArgumentException("User login or password can't not be empty");
+        }
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
